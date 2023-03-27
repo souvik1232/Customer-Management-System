@@ -41,7 +41,8 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function UserListTable() {
+function UserListTable(props) {
+  const { setToken } = props;
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
   const [state, setState] = React.useState(false);
@@ -107,6 +108,8 @@ function UserListTable() {
   };
 
   const handleLogout = () => {
+    localStorage.setItem("token", "");
+    setToken();
     navigate("/");
   };
   const Editables = (row) => {

@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import CssTextField from "../components/customtextfield";
 
 function AddUserMobile(props) {
-  const { row } = props;
+  const { row, setToken } = props;
   const [firstname, setFirstname] = useState(row ? row.row.firstname : "");
   const [lastname, setLastname] = useState(row ? row.row.lastname : "");
   const [email, setEmail] = useState(row ? row.row.email : "");
@@ -36,6 +36,8 @@ function AddUserMobile(props) {
     });
   }, []);
 
+  const emptyField =
+    !!firstname && !!lastname && !!email && !!phone && !!password;
   const handleSubmit = (e) => {
     const newid = Math.max(...id) + 1;
 
@@ -48,17 +50,18 @@ function AddUserMobile(props) {
       phone: `${phone}`,
       password: `${password}`,
     };
-    addEmployee(employeeObject).then((res) => {
-      if (res.data.message === "successful") {
-        setSuccess(true);
-        setFirstname("");
-        setLastname("");
-        setEmail("");
-        setPhone("");
-        setPassword("");
-        setId();
-      }
-    });
+    emptyField &&
+      addEmployee(employeeObject).then((res) => {
+        if (res.data.message === "successful") {
+          setSuccess(true);
+          setFirstname("");
+          setLastname("");
+          setEmail("");
+          setPhone("");
+          setPassword("");
+          setId();
+        }
+      });
   };
 
   const handleEdit = (e) => {
@@ -71,7 +74,7 @@ function AddUserMobile(props) {
       phone: `${phone}`,
       password: `${password}`,
     };
-    updateEmployee(employeeObject, row.row.id);
+    emptyField && updateEmployee(employeeObject, row.row.id);
   };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -84,6 +87,7 @@ function AddUserMobile(props) {
     setAnchorEl(null);
   };
   const handleLogout = () => {
+    setToken();
     navigate("/");
   };
 

@@ -3,14 +3,15 @@ import React from "react";
 import Loginpage from "./Loginpage";
 import MobileLogin from "./MobileLogin";
 
-function Landing() {
+function Landing(props) {
+  const { setToken } = props;
   return (
     <>
       <Hidden xsDown>
-        <Loginpage />
+        <Loginpage setToken={setToken} />
       </Hidden>
       <Hidden smUp>
-        <MobileLogin />
+        <MobileLogin setToken={setToken} />
       </Hidden>
     </>
   );

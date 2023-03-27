@@ -26,6 +26,7 @@ export const useStyles = makeStyles({
   },
   heading: {
     color: "black",
+    alignSelf: "center",
   },
   textArea: {
     margin: "20px 15px !important",

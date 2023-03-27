@@ -11,11 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { useStyles } from "./style";
 import image1 from "../LandingPage/login.png";
 import CssTextField from "../components/customtextfield";
+import validatePassword from "../hooks/useValidation";
+import { loginUser } from "../Api/api";
 
-function MobileLogin() {
+function MobileLogin(props) {
+  const { setToken } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const [error, setError] = useState(false);
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -28,9 +32,21 @@ function MobileLogin() {
     setPassword(event.target.value);
   };
 
+  const loginvariables = {
+    userName: email,
+    password: password,
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    !!email && !!password && navigate("/userHome");
+    setError(() => !validatePassword(password));
+    validatePassword(password) &&
+      loginUser(loginvariables).then((res) => {
+        setToken(() => res.data.token);
+        if (res?.data?.user?.status === "Logged In" && !!email && !!password) {
+          navigate("/userHome");
+        }
+      });
   };
   return (
     <div className={classes.mobilelogin}>
@@ -65,6 +81,8 @@ function MobileLogin() {
           type={showPassword ? "text" : "password"}
           variant='outlined'
           value={password}
+          error={error}
+          helperText={error ? "Wrong Password" : ""}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

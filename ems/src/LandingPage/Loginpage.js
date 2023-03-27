@@ -5,8 +5,9 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../Api/api";
 import { useStyles } from "./style";
@@ -15,7 +16,8 @@ import image1 from "../HomePage/object.png";
 import validatePassword from "../hooks/useValidation";
 import CssTextField from "../components/customtextfield";
 
-function Loginpage() {
+function Loginpage(props) {
+  const { setToken } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
@@ -40,10 +42,11 @@ function Loginpage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setError(() => !validatePassword(password));
-    console.log(error);
-    !error &&
+    validatePassword(password) &&
       loginUser(loginvariables).then((res) => {
-        if (res?.data?.status === "Logged In" && !!email && !!password) {
+        setToken(() => res.data.token);
+        localStorage.setItem("token", res.data.token);
+        if (res?.data?.user?.status === "Logged In" && !!email && !!password) {
           navigate("/userHome");
         }
       });
@@ -69,7 +72,7 @@ function Loginpage() {
         <img
           src={image1}
           alt='Company logo'
-          style={{ height: "4vh", margin: "10px" }}
+          style={{ height: "4vh", margin: "10px", alignSelf: "center" }}
         />
       </div>
 
@@ -134,3 +137,7 @@ function Loginpage() {
 }
 
 export default Loginpage;
+
+Loginpage.prototypes = {
+  setToken: PropTypes.func.isRequired,
+};

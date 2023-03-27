@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 var dboperations = require("../../dboperation");
 var Employee = require("../../employeelist");
+const { v4: uuidv4 } = require("uuid");
+const token = uuidv4();
 
 router.post("/", (req, res, next) => {
   const userInfo = {
@@ -10,6 +12,7 @@ router.post("/", (req, res, next) => {
   };
   res.status(200).json({
     message: "Login SuccessFul",
+    token: token,
     user: userInfo,
   });
 });

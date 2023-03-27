@@ -15,7 +15,8 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import image from "../HomePage/object.png";
 import { useNavigate } from "react-router-dom";
 
-function AdduserDesktop(row) {
+function AdduserDesktop(props) {
+  const { setToken } = props;
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -46,17 +47,22 @@ function AdduserDesktop(row) {
       phone: `${phone}`,
       password: `${password}`,
     };
-    addEmployee(employeeObject).then((res) => {
-      if (res.data.message === "successful") {
-        setSuccess(true);
-        setFirstname("");
-        setLastname("");
-        setEmail("");
-        setPhone("");
-        setPassword("");
-        setId();
-      }
-    });
+    !!firstname &&
+      !!lastname &&
+      !!email &&
+      !!phone &&
+      !!password &&
+      addEmployee(employeeObject).then((res) => {
+        if (res.data.message === "successful") {
+          setSuccess(true);
+          setFirstname("");
+          setLastname("");
+          setEmail("");
+          setPhone("");
+          setPassword("");
+          setId();
+        }
+      });
   };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -68,6 +74,7 @@ function AdduserDesktop(row) {
     setAnchorEl(null);
   };
   const handleLogout = () => {
+    setToken();
     navigate("/");
   };
   const handleClick = (event) => {

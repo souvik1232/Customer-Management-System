@@ -3,14 +3,15 @@ import React from "react";
 import UserListMobile from "./UserListMobile";
 import UserListTable from "./UserListTable";
 
-function HomePage() {
+function HomePage(props) {
+  const { setToken } = props;
   return (
     <>
       <Hidden xsDown>
-        <UserListTable />
+        <UserListTable setToken={setToken} />
       </Hidden>
       <Hidden smUp>
-        <UserListMobile />
+        <UserListMobile setToken={setToken} />
       </Hidden>
     </>
   );

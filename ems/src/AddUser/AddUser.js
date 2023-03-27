@@ -3,14 +3,15 @@ import { Hidden } from "@material-ui/core";
 import AdduserDesktop from "./AdduserDesktop";
 import AddUserMobile from "./AddUserMobile";
 
-function AddUser() {
+function AddUser(props) {
+  const { setToken } = props;
   return (
     <>
       <Hidden xsDown>
-        <AdduserDesktop />
+        <AdduserDesktop setToken={setToken} />
       </Hidden>
       <Hidden smUp>
-        <AddUserMobile />
+        <AddUserMobile setToken={setToken} />
       </Hidden>
     </>
   );

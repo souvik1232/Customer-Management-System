@@ -9,7 +9,7 @@ export const loginUser = async (variables) => {
   let loginRes = await fetch("http://localhost:4000/user", requestOptions)
     .then((res) => res.json())
     .then((data) => {
-      return data.user;
+      return data;
     });
   return {
     data: loginRes,
