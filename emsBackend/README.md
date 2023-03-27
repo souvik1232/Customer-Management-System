@@ -1,13 +1,12 @@
 # Backend with Node.js and MSSQL
 
-This is a backend repository built using Node.js and MSSQL. It provides an API for interacting with a MSSQL database.
+This is a backend repository built using Node.js and MSSQL. It provides API's for interacting with a MSSQL database and the frontend respectively.
 
 ## Requirements
 Node.js version 12 or higher
 MSSQL server
 
 ## Installation
-Clone the repository : ```git clone https://github.com/your-username/backend.git```.  
 Install dependencies : ```npm install```.  
 Configure the database connection :  
 ```
@@ -22,7 +21,8 @@ const config = {
     trustServerCertificate: true
   },
 };
-```  
+```    
+Check in SQL Server Manger if SQL SERVER BROWSER is enabled or not , if not enable it and rerun the SQL service.  
 Start the server : ```npm run dev```  
 
 This will start the server on port 4000 by default.  
