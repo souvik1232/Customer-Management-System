@@ -2,12 +2,11 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../Api/api";
 import { useStyles } from "./style";

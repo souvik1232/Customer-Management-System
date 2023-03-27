@@ -4,7 +4,6 @@ import {
   Menu,
   MenuItem,
   Snackbar,
-  TextField,
   Tooltip,
   Typography,
 } from "@material-ui/core";
@@ -24,6 +23,7 @@ function AddUserMobile(props) {
   const [phone, setPhone] = useState(row ? row.row.phone : "");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = React.useState(false);
+  const [snackmessage, setSnackmessage] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [id, setId] = React.useState([]);
   const classes = useStyles();
@@ -50,6 +50,11 @@ function AddUserMobile(props) {
       phone: `${phone}`,
       password: `${password}`,
     };
+    console.log("called");
+    if (!firstname || !lastname || !email || !phone || !password) {
+      setSuccess(true);
+      setSnackmessage("Fields can't be left empty");
+    }
     emptyField &&
       addEmployee(employeeObject).then((res) => {
         if (res.data.message === "successful") {
@@ -60,6 +65,7 @@ function AddUserMobile(props) {
           setPhone("");
           setPassword("");
           setId();
+          setSnackmessage("Employee Added");
         }
       });
   };
@@ -74,6 +80,10 @@ function AddUserMobile(props) {
       phone: `${phone}`,
       password: `${password}`,
     };
+    if (!firstname || !lastname || !email || !phone || !password) {
+      setSuccess(true);
+      setSnackmessage("Fields can't be left empty");
+    }
     emptyField && updateEmployee(employeeObject, row.row.id);
   };
   const handleClose = (event, reason) => {
@@ -205,7 +215,7 @@ function AddUserMobile(props) {
             open={success}
             autoHideDuration={800}
             onClose={handleClose}
-            message='Employee Added'
+            message={snackmessage}
           />
         </div>
       </div>

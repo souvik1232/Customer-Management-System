@@ -38,6 +38,7 @@ const addEmployee = async (employee) => {
 };
 
 const deleteEmployee = async (id) => {
+  console.log(typeof id, id);
   try {
     let pool = await sql.connect(config);
     let employees = await pool
@@ -50,9 +51,6 @@ const deleteEmployee = async (id) => {
 };
 
 const updateEmployee = async (employee, id) => {
-  console.log(employee, id);
-
-  console.log(typeof id);
   var query =
     "UPDATE employee_list SET empid=" +
     parseInt(employee.id) +

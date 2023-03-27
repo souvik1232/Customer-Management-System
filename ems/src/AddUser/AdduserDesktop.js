@@ -4,7 +4,6 @@ import {
   Menu,
   MenuItem,
   Snackbar,
-  TextField,
   Tooltip,
   Typography,
 } from "@material-ui/core";
@@ -14,6 +13,7 @@ import { useStyles } from "./styles";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import image from "../HomePage/object.png";
 import { useNavigate } from "react-router-dom";
+import CssTextField from "../components/customtextfield";
 
 function AdduserDesktop(props) {
   const { setToken } = props;
@@ -22,6 +22,7 @@ function AdduserDesktop(props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [snackmessage, setSnackmessage] = useState("");
   const [id, setId] = React.useState([]);
   const [success, setSuccess] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -47,6 +48,12 @@ function AdduserDesktop(props) {
       phone: `${phone}`,
       password: `${password}`,
     };
+
+    if (!firstname || !lastname || !email || !phone || !password) {
+      setSuccess(true);
+      setSnackmessage("Fields can't be left empty");
+    }
+
     !!firstname &&
       !!lastname &&
       !!email &&
@@ -61,6 +68,7 @@ function AdduserDesktop(props) {
           setPhone("");
           setPassword("");
           setId();
+          setSnackmessage("Employee Added");
         }
       });
   };
@@ -125,7 +133,7 @@ function AdduserDesktop(props) {
             marginBottom: "30px",
           }}
         >
-          <TextField
+          <CssTextField
             style={{ margin: "20px 25px" }}
             id='firstname'
             label='FirstName'
@@ -134,7 +142,7 @@ function AdduserDesktop(props) {
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
           />
-          <TextField
+          <CssTextField
             style={{ margin: "20px 25px" }}
             id='lastname'
             label='LastName'
@@ -145,7 +153,7 @@ function AdduserDesktop(props) {
           />
         </div>
         <div style={{ display: "flex", marginBottom: "30px" }}>
-          <TextField
+          <CssTextField
             style={{ margin: "20px 25px" }}
             id='email'
             label='Email'
@@ -156,7 +164,7 @@ function AdduserDesktop(props) {
           />
         </div>
         <div style={{ display: "flex", marginBottom: "30px" }}>
-          <TextField
+          <CssTextField
             style={{ margin: "20px 25px 20px 25px" }}
             id='phone'
             label='Phone Number'
@@ -167,7 +175,7 @@ function AdduserDesktop(props) {
           />
         </div>
         <div style={{ display: "flex", marginBottom: "30px" }}>
-          <TextField
+          <CssTextField
             style={{ margin: "20px 25px" }}
             id='password'
             label='Password'
@@ -199,7 +207,7 @@ function AdduserDesktop(props) {
             open={success}
             autoHideDuration={800}
             onClose={handleClose}
-            message='Employee Added'
+            message={snackmessage}
           />
         </div>
       </div>

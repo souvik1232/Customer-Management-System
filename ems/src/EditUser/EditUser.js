@@ -1,6 +1,7 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { Button, Snackbar, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { updateEmployee } from "../Api/api";
+import CssTextField from "../components/customtextfield";
 import { useStyles } from "./style";
 
 function EditUser(props) {
@@ -10,9 +11,19 @@ function EditUser(props) {
   const [email, setEmail] = useState(row ? row.row.email : "");
   const [phone, setPhone] = useState(row ? row.row.phone : "");
   const [password, setPassword] = useState("");
+  const [success, setSuccess] = React.useState(false);
+  const [snackmessage, setSnackmessage] = useState("");
   const classes = useStyles();
 
-  const handleEdit = () => {
+  const handleSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSuccess(false);
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
     let employeeObject = {
       id: `${row.row.id}`,
       firstname: `${firstname}`,
@@ -21,9 +32,18 @@ function EditUser(props) {
       phone: `${phone}`,
       password: `${password}`,
     };
-    updateEmployee(employeeObject, row.row.id);
-    setRender(!render);
-    toggleDrawer(false);
+
+    if (!firstname || !lastname || !email || !phone || !password) {
+      setSuccess(true);
+      setSnackmessage("Fields can't be left empty");
+    }
+    // console.log(!!firstname && !!lastname && !!email && !!phone && !!password);
+    if (!!firstname && !!lastname && !!email && !!phone && !!password) {
+      updateEmployee(employeeObject, row.row.id);
+      setSuccess(true);
+      setRender(!render);
+      toggleDrawer(false);
+    }
   };
   return (
     <div className={classes.container}>
@@ -41,7 +61,7 @@ function EditUser(props) {
           marginBottom: "30px",
         }}
       >
-        <TextField
+        <CssTextField
           style={{ margin: "20px 25px" }}
           id='firstname'
           label='FirstName'
@@ -50,7 +70,7 @@ function EditUser(props) {
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
-        <TextField
+        <CssTextField
           style={{ margin: "20px 25px" }}
           id='lastname'
           label='LastName'
@@ -61,7 +81,7 @@ function EditUser(props) {
         />
       </div>
       <div style={{ display: "flex", marginBottom: "30px" }}>
-        <TextField
+        <CssTextField
           style={{ margin: "20px 25px" }}
           id='email'
           label='Email'
@@ -72,7 +92,7 @@ function EditUser(props) {
         />
       </div>
       <div style={{ display: "flex", marginBottom: "30px" }}>
-        <TextField
+        <CssTextField
           style={{ margin: "20px 25px 20px 25px" }}
           id='phone'
           label='Phone Number'
@@ -83,7 +103,7 @@ function EditUser(props) {
         />
       </div>
       <div style={{ display: "flex", marginBottom: "30px" }}>
-        <TextField
+        <CssTextField
           style={{ margin: "20px 25px" }}
           id='password'
           label='Password'
@@ -108,6 +128,17 @@ function EditUser(props) {
         >
           Save
         </Button>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={success}
+          autoHideDuration={800}
+          onClose={handleSnackClose}
+          message={snackmessage}
+        />
       </div>
     </div>
   );
