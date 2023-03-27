@@ -8,13 +8,13 @@ MSSQL server
 
 ## Installation
 Install dependencies : ```npm install```.  
-Configure the database connection :  
+Configure the database connection in `dbconfig.js` :  
 ```
 const config = {
   server: 'your-server',
   user: 'your-username',
-  password: "12345678",
-  database: 'your-password',
+  password: "your-password",
+  database: 'your-databsename',
   driver: "msnodesqlv8",
   options: {
     trustedConnection: true,
