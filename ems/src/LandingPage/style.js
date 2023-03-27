@@ -28,7 +28,7 @@ export const useStyles = makeStyles({
     color: "black",
   },
   textArea: {
-    margin: "20px 15px",
+    margin: "20px 15px !important",
   },
   loginbtn: {
     marginTop: "100px",
