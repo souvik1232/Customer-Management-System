@@ -5,6 +5,8 @@ const CssTextField = withStyles({
     "& label.Mui-focused": {
       color: "#0e88f1",
     },
+
+    borderColor: "#0e88f1",
   },
 })(TextField);
 export default CssTextField;

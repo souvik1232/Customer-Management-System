@@ -2,7 +2,7 @@ const uppercaseRegExp = /(?=.*?[A-Z])/;
 const lowercaseRegExp = /(?=.*?[a-z])/;
 const digitsRegExp = /(?=.*?[0-9])/;
 const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
-
+// Checks if Password has one-upper case one lower-case one special charachter and one number
 const validatePassword = (pass) => {
   const passwordLength = pass.length;
   const uppercasePassword = uppercaseRegExp.test(pass);
